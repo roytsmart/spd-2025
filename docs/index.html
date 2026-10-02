@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Noise Measured by Back-illuminated Silicon Sensors</title>
+<style>
+  @font-face { font-family: "Aptos (Segoe UI)"; src: local("Segoe UI"), local("SegoeUI"); font-weight: normal; font-style: normal; size-adjust: 96.9%; }
+  @font-face { font-family: "Aptos (Segoe UI)"; src: local("Segoe UI Bold"), local("SegoeUI-Bold"); font-weight: bold; font-style: normal; size-adjust: 95.2%; }
+  @font-face { font-family: "Aptos (Segoe UI)"; src: local("Segoe UI Italic"), local("SegoeUI-Italic"); font-weight: normal; font-style: italic; size-adjust: 99.0%; }
+  @font-face { font-family: "Aptos (Segoe UI)"; src: local("Segoe UI Bold Italic"), local("SegoeUI-BoldItalic"); font-weight: bold; font-style: italic; size-adjust: 96.1%; }
+  @font-face { font-family: "Aptos (Arial)"; src: local("Arial"), local("ArialMT"); font-weight: normal; font-style: normal; size-adjust: 95.1%; }
+  @font-face { font-family: "Aptos (Arial)"; src: local("Arial Bold"), local("Arial-BoldMT"); font-weight: bold; font-style: normal; size-adjust: 94.3%; }
+  @font-face { font-family: "Aptos (Arial)"; src: local("Arial Italic"), local("Arial-ItalicMT"); font-weight: normal; font-style: italic; size-adjust: 95.0%; }
+  @font-face { font-family: "Aptos (Arial)"; src: local("Arial Bold Italic"), local("Arial-BoldItalicMT"); font-weight: bold; font-style: italic; size-adjust: 94.3%; }
+  @font-face { font-family: "Aptos (Liberation Sans)"; src: local("Liberation Sans"), local("LiberationSans"); font-weight: normal; font-style: normal; size-adjust: 95.1%; }
+  @font-face { font-family: "Aptos (Liberation Sans)"; src: local("Liberation Sans Bold"), local("LiberationSans-Bold"); font-weight: bold; font-style: normal; size-adjust: 94.3%; }
+  @font-face { font-family: "Aptos (Liberation Sans)"; src: local("Liberation Sans Italic"), local("LiberationSans-Italic"); font-weight: normal; font-style: italic; size-adjust: 95.0%; }
+  @font-face { font-family: "Aptos (Liberation Sans)"; src: local("Liberation Sans Bold Italic"), local("LiberationSans-BoldItalic"); font-weight: bold; font-style: italic; size-adjust: 94.3%; }
+  @font-face { font-family: "Aptos Display (Segoe UI)"; src: local("Segoe UI"), local("SegoeUI"); font-weight: normal; font-style: normal; size-adjust: 90.9%; }
+  @font-face { font-family: "Aptos Display (Segoe UI)"; src: local("Segoe UI Bold"), local("SegoeUI-Bold"); font-weight: bold; font-style: normal; size-adjust: 89.2%; }
+  @font-face { font-family: "Aptos Display (Segoe UI)"; src: local("Segoe UI Italic"), local("SegoeUI-Italic"); font-weight: normal; font-style: italic; size-adjust: 93.0%; }
+  @font-face { font-family: "Aptos Display (Segoe UI)"; src: local("Segoe UI Bold Italic"), local("SegoeUI-BoldItalic"); font-weight: bold; font-style: italic; size-adjust: 90.2%; }
+  @font-face { font-family: "Aptos Display (Arial)"; src: local("Arial"), local("ArialMT"); font-weight: normal; font-style: normal; size-adjust: 89.3%; }
+  @font-face { font-family: "Aptos Display (Arial)"; src: local("Arial Bold"), local("Arial-BoldMT"); font-weight: bold; font-style: normal; size-adjust: 88.3%; }
+  @font-face { font-family: "Aptos Display (Arial)"; src: local("Arial Italic"), local("Arial-ItalicMT"); font-weight: normal; font-style: italic; size-adjust: 89.2%; }
+  @font-face { font-family: "Aptos Display (Arial)"; src: local("Arial Bold Italic"), local("Arial-BoldItalicMT"); font-weight: bold; font-style: italic; size-adjust: 88.5%; }
+  @font-face { font-family: "Aptos Display (Liberation Sans)"; src: local("Liberation Sans"), local("LiberationSans"); font-weight: normal; font-style: normal; size-adjust: 89.3%; }
+  @font-face { font-family: "Aptos Display (Liberation Sans)"; src: local("Liberation Sans Bold"), local("LiberationSans-Bold"); font-weight: bold; font-style: normal; size-adjust: 88.3%; }
+  @font-face { font-family: "Aptos Display (Liberation Sans)"; src: local("Liberation Sans Italic"), local("LiberationSans-Italic"); font-weight: normal; font-style: italic; size-adjust: 89.2%; }
+  @font-face { font-family: "Aptos Display (Liberation Sans)"; src: local("Liberation Sans Bold Italic"), local("LiberationSans-BoldItalic"); font-weight: bold; font-style: italic; size-adjust: 88.5%; }
+  body {
+    margin: 0;
+    background: #14161a;
+    color: #e8e8e8;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  header { padding: 2.5rem 1.5rem 1rem; max-width: 60rem; margin: 0 auto; }
+  header h1 { font-size: 1.5rem; line-height: 1.3; font-weight: 600; margin: 0 0 .4rem; }
+  header p { margin: 0; opacity: .65; font-size: .95rem; }
+  main { max-width: 76rem; margin: 0 auto; padding: 1rem 1.5rem 6rem; }
+  /* The number under each slide takes up about 1.15rem, which with these
+     margins leaves 2.5rem between one slide and the next. */
+  .slide { position: relative; margin: 1.35rem 0; }
+  .stage {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: #fff;
+    container-type: size;
+    overflow: hidden;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.5);
+  }
+  .piece { position: absolute; }
+  .crop { overflow: hidden; }
+  /* PowerPoint stretches a picture over its shape, so this does too. */
+  .fill { width: 100%; height: 100%; object-fit: fill; }
+  .text {
+    color: #000000;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+  .text p { margin: 0; }
+  /* The typeface the theme asks for, and what to fall back to. */
+  .text { font-family: "Aptos", "Aptos (Segoe UI)", "Aptos (Arial)", "Aptos (Liberation Sans)", "Segoe UI", system-ui, sans-serif; }
+  math { font-family: "Cambria Math", "STIX Two Math", math; }
+  /* A bullet hangs in the indent PowerPoint gives it, in a box exactly that
+     wide, so that the first line of a bullet starts where the ones it wraps
+     onto do. */
+  .bullet { text-indent: var(--indent); }
+  .bullet::before {
+    content: var(--bullet);
+    display: inline-block;
+    width: calc(-1 * var(--indent));
+    text-indent: 0;
+  }
+  .number {
+    text-align: right; margin-top: .35rem; line-height: 1;
+    font-size: .8rem; opacity: .45; font-variant-numeric: tabular-nums;
+  }
+  /* What was said over a slide, under it. It is set as reading rather than
+     as part of the slide, so it keeps the page's size however wide the
+     slide is. */
+  .notes {
+    max-width: 46rem; margin: 1rem auto 0;
+    font-size: 1rem; line-height: 1.6; color: #c9ccd1;
+  }
+  .notes p { margin: 0 0 .75em; }
+  .notes a { color: #8ab4f8; }
+  body.present .notes, body.quiet .notes { display: none; }
+  button {
+    appearance: none; cursor: pointer; font: inherit; font-size: .9rem;
+    margin-top: 1.1rem; padding: .45rem .9rem;
+    color: #e8e8e8; background: #262a31;
+    border: 1px solid #3a3f48; border-radius: 4px;
+  }
+  button:hover { background: #31363f; }
+  button + button { margin-left: .5rem; }
+
+  /* Presenting: one slide at a time, filling whatever it is given, rather
+     than the whole deck down a page. The page keeps its own layout, and
+     none of the slides' own geometry changes: every position on them is a
+     share of the slide and every size a share of its height, so a slide
+     blown up to fill a screen is the same slide. */
+  body.present { overflow: hidden; background: #000; }
+  body.present header, body.present .number { display: none; }
+  body.present main { max-width: none; margin: 0; padding: 0; }
+  body.present .slide { display: none; margin: 0; }
+  body.present .slide.current {
+    display: grid; place-items: center;
+    position: fixed; inset: 0; background: #000;
+  }
+  body.present .stage {
+    width: min(100%, calc(100vh * 16 / 9));
+    width: min(100%, calc(100dvh * 16 / 9));
+    border-radius: 0; box-shadow: none;
+  }
+  #hud {
+    position: fixed; right: 1rem; bottom: .7rem; z-index: 1;
+    font-size: .85rem; opacity: .4; pointer-events: none;
+    font-variant-numeric: tabular-nums;
+  }
+  body:not(.present) #hud { display: none; }
+</style>
+</head>
+<body>
+<header>
+  <h1>The Noise Measured by Back-illuminated Silicon Sensors</h1>
+  <p>AAS/SPD 2025 · the slides as they were presented, with the speaker notes</p>
+  <button id="present">Present full screen</button>
+  <button id="notes">Hide notes</button>
+</header>
+<main>
+<section class="slide" id="slide-1"><div class="stage"><div class="piece text" style="z-index:0;left:12.5000%;top:16.3657%;width:75.0000%;height:34.8148%;justify-content:flex-end;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p style="font-size:10.0000cqh;line-height:1.080;text-align:center;font-family:&#x27;Aptos Display&#x27;, &#x27;Aptos Display (Segoe UI)&#x27;, &#x27;Aptos Display (Arial)&#x27;, &#x27;Aptos Display (Liberation Sans)&#x27;, &#x27;Segoe UI&#x27;, system-ui, sans-serif">The Noise Measured by Back-illuminated Silicon Sensors</p></div><div class="piece text" style="z-index:1;left:12.5000%;top:52.5231%;width:75.0000%;height:42.0981%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p style="font-size:4.4444cqh;line-height:1.080;text-align:center">Roy T. Smart<span style="vertical-align:super;font-size:70%">1</span>, Charles C. Kankelborg<span style="vertical-align:super;font-size:70%">1</span>, and Jacob D. Parker<span style="vertical-align:super;font-size:70%">2</span></p><p style="font-size:4.4444cqh;line-height:1.080;text-align:center;vertical-align:super;font-size:70%;margin-top:1.8519cqh">1Montana State University</p><p style="font-size:4.4444cqh;line-height:1.080;text-align:center;vertical-align:super;font-size:70%;margin-top:1.8519cqh">2NASA/GSFC</p><p style="font-size:4.4444cqh;line-height:1.080;text-align:center;margin-top:1.8519cqh"><br></p><p style="font-size:4.4444cqh;line-height:1.080;text-align:center;margin-top:1.8519cqh">246<span style="vertical-align:super;font-size:70%">th</span> Meeting of the American Astronomical Society</p><p style="font-size:4.4444cqh;line-height:1.080;text-align:center;margin-top:1.8519cqh">June 9<span style="vertical-align:super;font-size:70%">th</span>, 2025</p></div><img class="piece fill" style="z-index:2;left:1.4130%;top:1.9877%;width:19.3400%;height:28.7560%" src="media/image2.svg" alt=""><img class="piece fill" style="z-index:3;left:77.1196%;top:2.6364%;width:22.1442%;height:27.4587%" src="media/image3.png" alt="A blue and yellow logo with a yellow flame AI-generated content may be incorrect."></div><div class="number">1 / 27</div><div class="notes"><p>Hi everyone, thanks for joining me today, my name is Roy Smart and I am a PhD student at Montana State University.</p><p>Today I’d like to talk about some work that we did on modeling the noise measured by back-illuminated silicon imaging sensors that are often used in astrononmy.</p></div></section>
+<section class="slide" id="slide-2"><div class="stage"><div class="piece text" style="z-index:0;left:6.8750%;top:5.3241%;width:86.2500%;height:19.3287%;justify-content:center;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p style="font-size:8.1481cqh;line-height:1.080;font-family:&#x27;Aptos Display&#x27;, &#x27;Aptos Display (Segoe UI)&#x27;, &#x27;Aptos Display (Arial)&#x27;, &#x27;Aptos Display (Liberation Sans)&#x27;, &#x27;Segoe UI&#x27;, system-ui, sans-serif">IRIS Noise Mystery</p></div><div class="piece text" style="z-index:1;left:6.8750%;top:26.6204%;width:44.4318%;height:63.4491%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">IRIS measures less noise than predicted (Wulser et al. 2018).</p><p class="bullet" style="font-size:4.4444cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Photon transfer curve is too shallow</p><p class="bullet" style="font-size:3.7037cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:16.6667cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Expected slope ratio &gt; 2</p><p class="bullet" style="font-size:3.7037cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:16.6667cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Measured slope ratio = 1.5</p><p class="bullet" style="font-size:4.4444cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">SNR is ~25% better than expected</p></div><img class="piece fill" style="z-index:2;left:57.5000%;top:48.1619%;width:41.3433%;height:47.8729%" src="media/image4.PNG" alt="A graph of a photo transfer curve AI-generated content may be incorrect."><img class="piece fill" style="z-index:3;left:57.5000%;top:0.0000%;width:42.5000%;height:48.1619%" src="media/image5.PNG" alt="A graph of a blue led AI-generated content may be incorrect."></div><div class="number">2 / 27</div><div class="notes"><p>An I’d like to begin with a minor mystery: on the left are two photon-transfer curves for the Interface Region Imaging Spectrograph, or IRIS from Wulser et al 2018.</p><p>A photon transfer curve plots the observed variance of a flat field as a function of the mean value.</p><p>The top plot is a photon-transfer curve in blue light and the bottom is the same but for ultraviolet light at 1350 angstroms.</p><p>From theoretical considerations, the IRIS team expected that the slope ratio between these two curves to be greater than 2 but they measured only 1.5</p><p>This is good news, as IRIS has about 25% better signal-to-noise ratio than expected, but why?</p></div></section>
+<section class="slide" id="slide-3"><div class="stage"><div class="piece text" style="z-index:0;left:6.8750%;top:5.3241%;width:86.2500%;height:19.3287%;justify-content:center;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p style="font-size:8.1481cqh;line-height:1.080;font-family:&#x27;Aptos Display&#x27;, &#x27;Aptos Display (Segoe UI)&#x27;, &#x27;Aptos Display (Arial)&#x27;, &#x27;Aptos Display (Liberation Sans)&#x27;, &#x27;Segoe UI&#x27;, system-ui, sans-serif">HST/WFC3 Noise</p></div><div class="piece text" style="z-index:1;left:6.8750%;top:26.6204%;width:37.0445%;height:63.4491%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Wide Field Camera 3 (WFC3) on Hubble also has this issue (Marinelli &amp; Green 2024)</p><p class="bullet" style="font-size:4.4444cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">“Quantum yield” is lower</p><p class="bullet" style="font-size:3.7037cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:16.6667cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Expected ~1.7 @ 200 nm</p><p class="bullet" style="font-size:3.7037cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:16.6667cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Measured 1.09 @ 200 nm</p><p class="bullet" style="font-size:4.4444cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">SNR is ~25% better than expected</p><p style="font-size:4.4444cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:10.0000cqh;text-indent:-3.3333cqh"><br></p><p style="font-size:4.4444cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:10.0000cqh;text-indent:-3.3333cqh"><br></p></div><img class="piece fill" style="z-index:2;left:43.9195%;top:4.2948%;width:54.0213%;height:79.5060%" src="media/image6.PNG" alt="A graph of a graph AI-generated content may be incorrect."></div><div class="number">3 / 27</div></section>
+<section class="slide" id="slide-4"><div class="stage"><div class="piece text" style="z-index:0;left:6.8750%;top:5.3241%;width:86.2500%;height:19.3287%;justify-content:center;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p style="font-size:8.1481cqh;line-height:1.080;font-family:&#x27;Aptos Display&#x27;, &#x27;Aptos Display (Segoe UI)&#x27;, &#x27;Aptos Display (Arial)&#x27;, &#x27;Aptos Display (Liberation Sans)&#x27;, &#x27;Segoe UI&#x27;, system-ui, sans-serif">Outline</p></div><div class="piece text" style="z-index:1;left:6.8750%;top:26.6204%;width:86.2500%;height:63.4491%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Signal</p><p class="bullet" style="font-size:4.4444cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Quantum yield</p><p class="bullet" style="font-size:4.4444cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Charge-collection efficiency</p><p class="bullet" style="font-size:4.4444cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Absorption</p><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Noise</p><p class="bullet" style="font-size:4.4444cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Simple noise model</p><p class="bullet" style="font-size:4.4444cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Shot noise</p><p class="bullet" style="font-size:4.4444cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Fano noise</p><p class="bullet" style="font-size:4.4444cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Partial-charge collection noise</p><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Results</p></div></div><div class="number">4 / 27</div></section>
+<section class="slide" id="slide-5"><div class="stage"><div class="piece text" style="z-index:0;left:6.8750%;top:40.3356%;width:86.2500%;height:19.3287%;justify-content:center;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p style="font-size:8.1481cqh;line-height:1.080;text-align:center;font-family:&#x27;Aptos Display&#x27;, &#x27;Aptos Display (Segoe UI)&#x27;, &#x27;Aptos Display (Arial)&#x27;, &#x27;Aptos Display (Liberation Sans)&#x27;, &#x27;Segoe UI&#x27;, system-ui, sans-serif">Signal</p></div></div><div class="number">5 / 27</div></section>
+<section class="slide" id="slide-6"><div class="stage"><div class="piece text" style="z-index:0;left:6.8750%;top:5.3241%;width:86.2500%;height:19.3287%;justify-content:center;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p style="font-size:8.1481cqh;line-height:1.080;font-family:&#x27;Aptos Display&#x27;, &#x27;Aptos Display (Segoe UI)&#x27;, &#x27;Aptos Display (Arial)&#x27;, &#x27;Aptos Display (Liberation Sans)&#x27;, &#x27;Segoe UI&#x27;, system-ui, sans-serif">Quantum Yield</p></div><div class="piece text" style="z-index:1;left:6.8750%;top:26.6204%;width:36.2220%;height:63.4491%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Quantum yield (QY) is the number of electron-hole pairs generated per photon</p><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">QY increases as photon energy increases</p><p class="bullet" style="font-size:4.4444cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">QY = E / (3.65 eV) where E is the energy of the photon</p><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Ramanathan &amp; Kurinsky (2020) QY model</p></div><img class="piece fill" style="z-index:2;left:44.3750%;top:10.0000%;width:52.5000%;height:80.0000%" src="media/image8.svg" alt=""></div><div class="number">6 / 27</div></section>
+<section class="slide" id="slide-7"><div class="stage"><img class="piece fill" style="z-index:0;left:37.4816%;top:12.4510%;width:60.0000%;height:80.0000%" src="media/image10.svg" alt=""><div class="piece text" style="z-index:1;left:6.8750%;top:5.3241%;width:41.9302%;height:19.3287%;justify-content:center;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p style="font-size:8.1481cqh;line-height:1.080;font-family:&#x27;Aptos Display&#x27;, &#x27;Aptos Display (Segoe UI)&#x27;, &#x27;Aptos Display (Arial)&#x27;, &#x27;Aptos Display (Liberation Sans)&#x27;, &#x27;Segoe UI&#x27;, system-ui, sans-serif">Back-illuminated Sensor Model</p></div><div class="piece text" style="z-index:2;left:6.8750%;top:26.6204%;width:31.1765%;height:63.4491%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Thin layer of silicon dioxide (~1 nm)</p><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Light-sensitive silicon (16 μm)</p><p class="bullet" style="font-size:4.4444cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Partial-charge collection (PCC) region (~100 nm)</p><p class="bullet" style="font-size:4.4444cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Field-free region </p><p class="bullet" style="font-size:4.4444cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Depletion region (8 μm)</p><p style="font-size:4.4444cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:10.0000cqh;text-indent:-3.3333cqh"><br></p></div></div><div class="number">7 / 27</div></section>
+<section class="slide" id="slide-8"><div class="stage"><div class="piece text" style="z-index:0;left:6.8750%;top:5.3241%;width:41.9302%;height:19.3287%;justify-content:center;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p style="font-size:8.1481cqh;line-height:1.080;font-family:&#x27;Aptos Display&#x27;, &#x27;Aptos Display (Segoe UI)&#x27;, &#x27;Aptos Display (Arial)&#x27;, &#x27;Aptos Display (Liberation Sans)&#x27;, &#x27;Segoe UI&#x27;, system-ui, sans-serif">Partial-Charge Collection</p></div><div class="piece text" style="z-index:1;left:6.8750%;top:26.6204%;width:30.1287%;height:68.9679%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p class="bullet" style="font-size:4.7963cqh;line-height:0.840;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Photons are absorbed according to the Beer-Lambert law (red)</p><p class="bullet" style="font-size:4.7963cqh;line-height:0.840;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Photons absorbed in  PCC region lose some electrons</p><p class="bullet" style="font-size:4.7963cqh;line-height:0.840;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Charge-collection efficiency (CCE) is the fraction of charge measured.</p><p class="bullet" style="font-size:4.7963cqh;line-height:0.840;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Piecewise-linear differential CCE introduced by Stern et al. (1994)</p><p class="bullet" style="font-size:4.1111cqh;line-height:0.840;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Denoted <math><mrow><mi>𝜂</mi><mo stretchy="false">(</mo><mi>𝑧</mi><mo stretchy="false">)</mo></mrow></math></p></div><img class="piece fill" style="z-index:2;left:37.5000%;top:12.4000%;width:60.0000%;height:80.0000%" src="media/image12.svg" alt=""></div><div class="number">8 / 27</div></section>
+<section class="slide" id="slide-9"><div class="stage"><div class="piece text" style="z-index:0;left:6.8750%;top:5.3241%;width:36.8015%;height:19.3287%;justify-content:center;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p style="font-size:8.1481cqh;line-height:1.080;font-family:&#x27;Aptos Display&#x27;, &#x27;Aptos Display (Segoe UI)&#x27;, &#x27;Aptos Display (Arial)&#x27;, &#x27;Aptos Display (Liberation Sans)&#x27;, &#x27;Segoe UI&#x27;, system-ui, sans-serif">Penetration depth</p></div><div class="piece text" style="z-index:1;left:6.8750%;top:26.6204%;width:34.6507%;height:63.4491%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Some ultraviolet wavelengths have a penetration depth smaller than the PCC region</p><p class="bullet" style="font-size:4.4444cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">~40 – 100 A</p><p class="bullet" style="font-size:4.4444cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">~500 – 4500 A</p><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Sensor is much less efficient in these regions</p></div><img class="piece fill" style="z-index:2;left:45.1973%;top:10.0000%;width:52.5000%;height:80.0000%" src="media/image14.svg" alt=""></div><div class="number">9 / 27</div><div class="notes"><p>This is a plot of pen depth vs wavelength. PCC happens near the surface, so only wavelengths that dip below this line are significantly affected by PCC.</p><p>Twin axes for CCE</p></div></section>
+<section class="slide" id="slide-10"><div class="stage"><div class="piece text" style="z-index:0;left:6.8750%;top:5.3241%;width:36.8015%;height:19.3287%;justify-content:center;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p style="font-size:7.3333cqh;line-height:1.080;font-family:&#x27;Aptos Display&#x27;, &#x27;Aptos Display (Segoe UI)&#x27;, &#x27;Aptos Display (Arial)&#x27;, &#x27;Aptos Display (Liberation Sans)&#x27;, &#x27;Segoe UI&#x27;, system-ui, sans-serif">Average Charge-Collection Efficiency</p></div><div class="piece text" style="z-index:1;left:6.8750%;top:26.6204%;width:34.6507%;height:63.4491%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Integrate Beer-Lambert law against differential CCE</p><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Average CCE is needed for correct photometry</p><p style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;text-indent:-3.3333cqh"><br></p></div><img class="piece fill" style="z-index:2;left:45.2250%;top:10.0000%;width:52.5000%;height:80.0000%" src="media/image16.svg" alt=""></div><div class="number">10 / 27</div><div class="notes"><p>This is a plot of pen depth vs wavelength. PCC happens near the surface, so only wavelengths that dip below this line are significantly affected by PCC.</p><p>Twin axes for CCE</p></div></section>
+<section class="slide" id="slide-11"><div class="stage"><div class="piece text" style="z-index:0;left:6.8750%;top:5.3241%;width:36.8015%;height:19.3287%;justify-content:center;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p style="font-size:8.1481cqh;line-height:1.080;font-family:&#x27;Aptos Display&#x27;, &#x27;Aptos Display (Segoe UI)&#x27;, &#x27;Aptos Display (Arial)&#x27;, &#x27;Aptos Display (Liberation Sans)&#x27;, &#x27;Segoe UI&#x27;, system-ui, sans-serif">Absorbance</p></div><div class="piece text" style="z-index:1;left:6.8750%;top:26.6204%;width:34.6507%;height:64.9896%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Energy absorbed by light-sensitive layer</p><p class="bullet" style="font-size:4.4444cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Reflections from each interface</p><p class="bullet" style="font-size:4.4444cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Oxide absorption</p><p class="bullet" style="font-size:4.4444cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Transmittance through entire sensor</p><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Computed using standard optical constants (Henke 1993, Palik 1997)</p><p style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;text-indent:-3.3333cqh"><br></p></div><img class="piece fill" style="z-index:2;left:45.2250%;top:10.0000%;width:52.5000%;height:80.0000%" src="media/image18.svg" alt=""></div><div class="number">11 / 27</div><div class="notes"><p>This is a plot of pen depth vs wavelength. PCC happens near the surface, so only wavelengths that dip below this line are significantly affected by PCC.</p><p>Twin axes for CCE</p></div></section>
+<section class="slide" id="slide-12"><div class="stage"><div class="piece text" style="z-index:0;left:6.8750%;top:5.3241%;width:59.3040%;height:19.3287%;justify-content:center;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p style="font-size:8.1481cqh;line-height:1.080;font-family:&#x27;Aptos Display&#x27;, &#x27;Aptos Display (Segoe UI)&#x27;, &#x27;Aptos Display (Arial)&#x27;, &#x27;Aptos Display (Liberation Sans)&#x27;, &#x27;Segoe UI&#x27;, system-ui, sans-serif">Quantum Efficiency</p></div><div class="piece text" style="z-index:1;left:6.8750%;top:26.6204%;width:74.3040%;height:63.4491%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Quantum Efficiency (QE) is the factor used to convert from incident photons to measured electrons</p><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Allowed to be larger than one!</p></div><div class="piece text" style="z-index:2;left:37.2376%;top:51.7782%;width:13.5787%;height:14.8763%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh;white-space:nowrap;width:max-content"><p style="font-size:5.1852cqh;line-height:1.200"><math display="block"><mrow><mi>QE</mi><mo>≡</mo><mfrac><mrow><msub><mrow><mi>𝑁</mi></mrow><mrow><mi>𝑒</mi></mrow></msub></mrow><mrow><msub><mrow><mi>𝑁</mi></mrow><mrow><mi>𝛾</mi></mrow></msub></mrow></mfrac></mrow></math></p></div><div class="piece text" style="z-index:3;left:41.5909%;top:68.0918%;width:38.0829%;height:7.6293%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh;white-space:nowrap;width:max-content"><p style="font-size:5.1852cqh;line-height:1.200"><math display="block"><mrow><mo>=</mo><mi>QY</mi><mo>×</mo><mi>CCE</mi><mtext> </mtext><mo>×</mo><mi>Absorbance</mi></mrow></math></p></div></div><div class="number">12 / 27</div></section>
+<section class="slide" id="slide-13"><div class="stage"><div class="piece text" style="z-index:0;left:6.8750%;top:5.3241%;width:38.0230%;height:19.3287%;justify-content:center;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p style="font-size:8.1481cqh;line-height:1.080;font-family:&#x27;Aptos Display&#x27;, &#x27;Aptos Display (Segoe UI)&#x27;, &#x27;Aptos Display (Arial)&#x27;, &#x27;Aptos Display (Liberation Sans)&#x27;, &#x27;Segoe UI&#x27;, system-ui, sans-serif">Effective Quantum Efficiency (EQE)</p></div><div class="piece text" style="z-index:1;left:6.8750%;top:42.7211%;width:36.5434%;height:47.3484%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Measured quantity</p><p class="bullet" style="font-size:4.4444cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Compare sensor to NIST photodiode</p><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Between 0 and 1</p><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Often used to compute QE</p></div><div class="piece text" style="z-index:2;left:6.3861%;top:29.8723%;width:35.9098%;height:7.6293%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh;white-space:nowrap;width:max-content"><p style="font-size:5.1852cqh;line-height:1.200"><math display="block"><mrow><mi>EQE</mi><mo>=</mo><mi>CCE</mi><mtext> </mtext><mo>×</mo><mi>Absorbance</mi></mrow></math></p></div><img class="piece fill" style="z-index:3;left:45.2250%;top:10.0000%;width:52.5000%;height:80.0000%" src="media/image20.svg" alt=""></div><div class="number">13 / 27</div></section>
+<section class="slide" id="slide-14"><div class="stage"><div class="piece text" style="z-index:0;left:6.8750%;top:40.3356%;width:86.2500%;height:19.3287%;justify-content:center;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p style="font-size:8.1481cqh;line-height:1.080;text-align:center;font-family:&#x27;Aptos Display&#x27;, &#x27;Aptos Display (Segoe UI)&#x27;, &#x27;Aptos Display (Arial)&#x27;, &#x27;Aptos Display (Liberation Sans)&#x27;, &#x27;Segoe UI&#x27;, system-ui, sans-serif">Noise</p></div></div><div class="number">14 / 27</div></section>
+<section class="slide" id="slide-15"><div class="stage"><div class="piece text" style="z-index:0;left:6.8750%;top:5.3241%;width:86.2500%;height:19.3287%;justify-content:center;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p style="font-size:8.1481cqh;line-height:1.080;font-family:&#x27;Aptos Display&#x27;, &#x27;Aptos Display (Segoe UI)&#x27;, &#x27;Aptos Display (Arial)&#x27;, &#x27;Aptos Display (Liberation Sans)&#x27;, &#x27;Segoe UI&#x27;, system-ui, sans-serif">Variance-to-mean ratio</p></div><div class="piece text" style="z-index:1;left:6.8750%;top:51.2121%;width:86.2500%;height:38.8573%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Convenient measure of noise</p><p class="bullet" style="font-size:4.4444cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">If <math><mrow><mi>𝑋</mi></mrow></math> is Poisson-distributed, <math><mrow><mi>VMR</mi><mrow><mo fence="true" stretchy="false">(</mo><mrow><mi>𝑋</mi></mrow><mo fence="true" stretchy="false">)</mo></mrow><mo>=</mo><mn>1</mn></mrow></math></p><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Constant vs. signal, unlike SNR</p><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Equal to the slope of the photon-transfer curve</p><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Same units as <math><mrow><mi>𝑋</mi></mrow></math></p><p style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;text-indent:-3.3333cqh"><br></p></div><div class="piece text" style="z-index:2;left:37.0718%;top:26.5909%;width:25.8563%;height:14.3836%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh;white-space:nowrap;width:max-content"><p style="font-size:5.1852cqh;line-height:1.200"><math display="block"><mrow><mi>VMR</mi><mrow><mo fence="true" stretchy="false">(</mo><mrow><mi>𝑋</mi></mrow><mo fence="true" stretchy="false">)</mo></mrow><mo>=</mo><mfrac><mrow><mi>Var</mi><mo stretchy="false">(</mo><mi>𝑋</mi><mo stretchy="false">)</mo></mrow><mrow><mrow><mo fence="true" stretchy="false">⟨</mo><mrow><mi>𝑋</mi></mrow><mo fence="true" stretchy="false">⟩</mo></mrow></mrow></mfrac></mrow></math></p></div></div><div class="number">15 / 27</div></section>
+<section class="slide" id="slide-16"><div class="stage"><div class="piece text" style="z-index:0;left:6.8750%;top:5.3241%;width:86.2500%;height:19.3287%;justify-content:center;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p style="font-size:8.1481cqh;line-height:1.080;font-family:&#x27;Aptos Display&#x27;, &#x27;Aptos Display (Segoe UI)&#x27;, &#x27;Aptos Display (Arial)&#x27;, &#x27;Aptos Display (Liberation Sans)&#x27;, &#x27;Segoe UI&#x27;, system-ui, sans-serif">Simple Noise Model</p></div><div class="piece text" style="z-index:1;left:6.8750%;top:22.5758%;width:37.5638%;height:26.5152%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p class="bullet" style="font-size:5.1852cqh;line-height:0.960;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Shot noise only</p><p class="bullet" style="font-size:5.1852cqh;line-height:0.960;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">All-or-nothing charge collection</p><p class="bullet" style="font-size:5.1852cqh;line-height:0.960;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Used by IRIS and WFC3</p></div><div class="piece text" style="z-index:2;left:11.0472%;top:48.5010%;width:26.6299%;height:14.1321%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh;white-space:nowrap;width:max-content"><p style="font-size:5.1852cqh;line-height:1.200"><math display="block"><mrow><msub><mrow><mi>𝜎</mi></mrow><mrow><msub><mrow><mi>𝑁</mi></mrow><mrow><mi>𝑒</mi></mrow></msub></mrow></msub><mo>=</mo><msqrt><mrow><mi>EQE</mi><mo>×</mo><mrow><mo fence="true" stretchy="false">⟨</mo><mrow><msub><mrow><mi>𝑁</mi></mrow><mrow><mi>𝛾</mi></mrow></msub></mrow><mo fence="true" stretchy="false">⟩</mo></mrow></mrow></msqrt></mrow></math></p></div><div class="piece text" style="z-index:3;left:12.0394%;top:67.4316%;width:24.6456%;height:7.6293%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh;white-space:nowrap;width:max-content"><p style="font-size:5.1852cqh;line-height:1.200"><math display="block"><mrow><mo>⇒</mo><mi>VMR</mi><mrow><mo fence="true" stretchy="false">(</mo><mrow><msub><mrow><mi>𝑁</mi></mrow><mrow><mi>𝑒</mi></mrow></msub></mrow><mo fence="true" stretchy="false">)</mo></mrow><mo>=</mo><mi>QY</mi></mrow></math></p></div><div class="piece text" style="z-index:4;left:9.4633%;top:79.8593%;width:32.3872%;height:12.7389%;justify-content:flex-start;padding:0.000cqh 0.000cqh 0.000cqh 0.000cqh;white-space:nowrap;width:max-content"><p style="font-size:5.1852cqh;line-height:1.200"><math display="block"><mrow><mo>⇒</mo><mi>VMR</mi><mo stretchy="false">(</mo><msub><mrow><mi>𝑁</mi></mrow><mrow><mi>𝛾</mi></mrow></msub><mo stretchy="false">)</mo><mo>=</mo><mfrac><mrow><mi>QY</mi></mrow><mrow><mi>QE</mi></mrow></mfrac><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mi>EQE</mi></mrow></mfrac></mrow></math></p></div><img class="piece fill" style="z-index:5;left:45.2250%;top:10.0000%;width:52.5000%;height:80.0000%" src="media/image22.svg" alt=""></div><div class="number">16 / 27</div></section>
+<section class="slide" id="slide-17"><div class="stage"><div class="piece text" style="z-index:0;left:6.8750%;top:5.3241%;width:86.2500%;height:19.3287%;justify-content:center;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p style="font-size:8.1481cqh;line-height:1.080;font-family:&#x27;Aptos Display&#x27;, &#x27;Aptos Display (Segoe UI)&#x27;, &#x27;Aptos Display (Arial)&#x27;, &#x27;Aptos Display (Liberation Sans)&#x27;, &#x27;Segoe UI&#x27;, system-ui, sans-serif">A Slightly More Complicated Noise Model</p></div><div class="piece text" style="z-index:1;left:6.8750%;top:26.6204%;width:86.2500%;height:63.4491%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Shot noise</p><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Fano noise</p><p class="bullet" style="font-size:4.4444cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Inherent randomness in the charge-generation process</p><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;font-weight:bold;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">PCC noise</p><p class="bullet" style="font-size:4.4444cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Uncertain CCE due to random absorption depth</p></div></div><div class="number">17 / 27</div></section>
+<section class="slide" id="slide-18"><div class="stage"><div class="piece text" style="z-index:0;left:6.8750%;top:5.3241%;width:86.2500%;height:19.3287%;justify-content:center;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p style="font-size:8.1481cqh;line-height:1.080;font-family:&#x27;Aptos Display&#x27;, &#x27;Aptos Display (Segoe UI)&#x27;, &#x27;Aptos Display (Arial)&#x27;, &#x27;Aptos Display (Liberation Sans)&#x27;, &#x27;Segoe UI&#x27;, system-ui, sans-serif">Shot Noise</p></div><div class="piece text" style="z-index:1;left:6.8750%;top:26.6204%;width:36.6335%;height:17.6220%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Absorbed photons are Poisson-distributed</p></div><img class="piece fill" style="z-index:2;left:45.2250%;top:10.0000%;width:52.5000%;height:80.0000%" src="media/image25.svg" alt=""><div class="piece text" style="z-index:3;left:7.2443%;top:52.4336%;width:32.5429%;height:8.5512%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh;white-space:nowrap;width:max-content"><p style="font-size:5.1852cqh;line-height:1.200"><math display="block"><mrow><msubsup><mrow><mi>𝑁</mi></mrow><mrow><mi>𝛾</mi></mrow><mrow><mo>′</mo></mrow></msubsup><mo>~</mo><mi>Poisson</mi><mo stretchy="false">(</mo><mi>𝐴</mi><mo>×</mo><mrow><mo fence="true" stretchy="false">⟨</mo><mrow><msub><mrow><mi>𝑁</mi></mrow><mrow><mi>𝛾</mi></mrow></msub></mrow><mo fence="true" stretchy="false">⟩</mo></mrow><mo stretchy="false">)</mo></mrow></math></p></div><div class="piece text" style="z-index:4;left:13.6813%;top:69.1761%;width:19.6689%;height:13.1083%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh;white-space:nowrap;width:max-content"><p style="font-size:5.1852cqh;line-height:1.200"><math display="block"><mrow><mi>VMR</mi><mo stretchy="false">(</mo><msub><mrow><mi>𝑁</mi></mrow><mrow><mi>𝛾</mi></mrow></msub><mo stretchy="false">)</mo><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mi>𝐴</mi></mrow></mfrac></mrow></math></p></div></div><div class="number">18 / 27</div></section>
+<section class="slide" id="slide-19"><div class="stage"><div class="piece text" style="z-index:0;left:6.8750%;top:5.3241%;width:86.2500%;height:19.3287%;justify-content:center;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p style="font-size:8.1481cqh;line-height:1.080;font-family:&#x27;Aptos Display&#x27;, &#x27;Aptos Display (Segoe UI)&#x27;, &#x27;Aptos Display (Arial)&#x27;, &#x27;Aptos Display (Liberation Sans)&#x27;, &#x27;Segoe UI&#x27;, system-ui, sans-serif">Fano Noise</p></div><div class="piece text" style="z-index:1;left:6.8750%;top:26.6204%;width:38.2270%;height:63.4491%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Quantum yield uncertainty</p><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Described by Fano factor</p><p class="bullet" style="font-size:4.4444cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;"><math><mrow><mi>ℱ</mi><mtext> </mtext><mo>=</mo><mtext> </mtext><mi>VMR</mi><mo stretchy="false">(</mo><mi>QY</mi><mo stretchy="false">)</mo><mo>≃</mo><mn>0.1</mn></mrow></math></p><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Ramanathan &amp; Kurinksy (2020) QY model</p><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Small compared to other noise sources</p><p style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;text-indent:-3.3333cqh"><br></p></div><img class="piece fill" style="z-index:2;left:45.2250%;top:10.0000%;width:52.5000%;height:80.0000%" src="media/image27.svg" alt=""></div><div class="number">19 / 27</div></section>
+<section class="slide" id="slide-20"><div class="stage"><div class="piece text" style="z-index:0;left:6.8750%;top:5.3241%;width:86.2500%;height:19.3287%;justify-content:center;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p style="font-size:8.1481cqh;line-height:1.080;font-family:&#x27;Aptos Display&#x27;, &#x27;Aptos Display (Segoe UI)&#x27;, &#x27;Aptos Display (Arial)&#x27;, &#x27;Aptos Display (Liberation Sans)&#x27;, &#x27;Segoe UI&#x27;, system-ui, sans-serif">PCC Noise</p></div><div class="piece text" style="z-index:1;left:6.8750%;top:26.6204%;width:36.5483%;height:40.4251%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Since each photon is absorbed at a different depth, each experiences a different CCE.</p></div><img class="piece fill" style="z-index:2;left:45.2250%;top:10.0000%;width:52.5000%;height:80.0000%" src="media/image31.svg" alt=""><div class="piece text" style="z-index:3;left:4.3357%;top:58.6073%;width:37.5000%;height:8.4381%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p style="font-size:5.1852cqh;line-height:1.200"><math display="block"><mrow><msub><mrow><mi>𝑛</mi></mrow><mrow><mi>𝑖</mi></mrow></msub><mo>←</mo><mi>Binomial</mi><mrow><mo fence="true" stretchy="false">(</mo><mrow><msub><mrow><mi>QY</mi></mrow><mrow><mi>𝑖</mi></mrow></msub><mo>,</mo><mi>𝜂</mi><mrow><mo fence="true" stretchy="false">(</mo><mrow><msub><mrow><mi>𝑧</mi></mrow><mrow><mi>𝑖</mi></mrow></msub></mrow><mo fence="true" stretchy="false">)</mo></mrow></mrow><mo fence="true" stretchy="false">)</mo></mrow></mrow></math></p></div><div class="piece text" style="z-index:4;left:14.9574%;top:70.7049%;width:16.2567%;height:20.3346%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh;white-space:nowrap;width:max-content"><p style="font-size:5.1852cqh;line-height:1.200"><math display="block"><mrow><msub><mrow><mi>𝑁</mi></mrow><mrow><mi>𝑒</mi></mrow></msub><mo>=</mo><mrow><msubsup><mo largeop="true">∑</mo><mrow><mi>𝑖</mi><mo>=</mo><mn>0</mn></mrow><mrow><msubsup><mrow><mi>𝑁</mi></mrow><mrow><mi>𝛾</mi></mrow><mrow><mo>′</mo></mrow></msubsup></mrow></msubsup><mrow><msub><mrow><mi>𝑛</mi></mrow><mrow><mi>𝑖</mi></mrow></msub></mrow></mrow></mrow></math></p></div></div><div class="number">20 / 27</div></section>
+<section class="slide" id="slide-21"><div class="stage"><div class="piece text" style="z-index:0;left:6.8750%;top:5.3241%;width:86.2500%;height:19.3287%;justify-content:center;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p style="font-size:8.1481cqh;line-height:1.080;font-family:&#x27;Aptos Display&#x27;, &#x27;Aptos Display (Segoe UI)&#x27;, &#x27;Aptos Display (Arial)&#x27;, &#x27;Aptos Display (Liberation Sans)&#x27;, &#x27;Segoe UI&#x27;, system-ui, sans-serif">Total Noise</p></div><div class="piece text" style="z-index:1;left:6.8750%;top:26.6204%;width:33.6932%;height:63.4491%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Sum of shot, Fano, and PCC noise</p><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">VMR is smaller than the simple model in the UV</p><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">The partial events improve the noise performance</p><p style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;text-indent:-3.3333cqh"><br></p></div><img class="piece fill" style="z-index:2;left:45.2250%;top:10.0000%;width:52.5000%;height:80.0000%" src="media/image34.svg" alt=""></div><div class="number">21 / 27</div></section>
+<section class="slide" id="slide-22"><div class="stage"><div class="piece text" style="z-index:0;left:6.8750%;top:5.3241%;width:86.2500%;height:19.3287%;justify-content:center;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p style="font-size:8.1481cqh;line-height:1.080;font-family:&#x27;Aptos Display&#x27;, &#x27;Aptos Display (Segoe UI)&#x27;, &#x27;Aptos Display (Arial)&#x27;, &#x27;Aptos Display (Liberation Sans)&#x27;, &#x27;Segoe UI&#x27;, system-ui, sans-serif">SNR improvement</p></div><div class="piece text" style="z-index:1;left:6.8750%;top:56.4815%;width:29.5597%;height:33.5880%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">SNR improves by up to <math><mrow><mo>~</mo><mn>30</mn><mo>%</mo></mrow></math> compared to the simple model</p><p style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;text-indent:-3.3333cqh"><br></p></div><img class="piece fill" style="z-index:2;left:45.2250%;top:10.0000%;width:52.5000%;height:80.0000%" src="media/image38.svg" alt=""><div class="piece text" style="z-index:3;left:10.4349%;top:27.4626%;width:22.4399%;height:19.9092%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh;white-space:nowrap;width:max-content"><p style="font-size:5.1852cqh;line-height:1.200"><math display="block"><mrow><mo>=</mo><msqrt><mrow><mfrac><mrow><mi>simple</mi><mtext> </mtext><mi>VMR</mi></mrow><mrow><mi>total</mi><mtext> </mtext><mi>VMR</mi></mrow></mfrac></mrow></msqrt></mrow></math></p></div></div><div class="number">22 / 27</div></section>
+<section class="slide" id="slide-23"><div class="stage"><div class="piece text" style="z-index:0;left:6.8750%;top:5.3241%;width:86.2500%;height:19.3287%;justify-content:center;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p style="font-size:8.1481cqh;line-height:1.080;font-family:&#x27;Aptos Display&#x27;, &#x27;Aptos Display (Segoe UI)&#x27;, &#x27;Aptos Display (Arial)&#x27;, &#x27;Aptos Display (Liberation Sans)&#x27;, &#x27;Segoe UI&#x27;, system-ui, sans-serif">Charge spreading?</p></div><div class="piece text" style="z-index:1;left:6.8750%;top:26.6204%;width:42.5000%;height:63.4491%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Charge spreading is when electrons diffuse into adjacent pixels.</p><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Proportional to size of field-free region</p><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Could explain the discrepancy since this increases the correlations between pixels</p></div><img class="piece fill" style="z-index:2;left:50.6250%;top:5.3241%;width:45.2108%;height:81.8462%" src="media/image39.PNG" alt="A graph of a graph of a graph AI-generated content may be incorrect."><div class="piece text" style="z-index:3;left:78.4192%;top:87.3767%;width:15.8102%;height:5.3854%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh;white-space:nowrap;width:max-content"><p style="font-size:3.3333cqh;line-height:1.200">Stern et al. (2003)</p></div></div><div class="number">23 / 27</div></section>
+<section class="slide" id="slide-24"><div class="stage"><div class="piece text" style="z-index:0;left:6.8750%;top:5.3241%;width:86.2500%;height:19.3287%;justify-content:center;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p style="font-size:8.1481cqh;line-height:1.080;font-family:&#x27;Aptos Display&#x27;, &#x27;Aptos Display (Segoe UI)&#x27;, &#x27;Aptos Display (Arial)&#x27;, &#x27;Aptos Display (Liberation Sans)&#x27;, &#x27;Segoe UI&#x27;, system-ui, sans-serif">Mean Charge Capture (MCC)</p></div><div class="piece text" style="z-index:1;left:6.8750%;top:24.6528%;width:37.7415%;height:65.4167%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Average fraction of charge captured by central pixel</p><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Janesick (2001) charge spreading model</p><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Stern et al. (2004) measurements</p><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Fit size of field-free region</p><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Predicts a similar amount of charge spreading for both UV and visible light</p></div><img class="piece fill" style="z-index:2;left:45.7609%;top:18.3449%;width:52.5000%;height:80.0000%" src="media/image41.svg" alt=""></div><div class="number">24 / 27</div></section>
+<section class="slide" id="slide-25"><div class="stage"><div class="piece text" style="z-index:0;left:6.8750%;top:5.3241%;width:86.2500%;height:19.3287%;justify-content:center;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p style="font-size:8.1481cqh;line-height:1.080;font-family:&#x27;Aptos Display&#x27;, &#x27;Aptos Display (Segoe UI)&#x27;, &#x27;Aptos Display (Arial)&#x27;, &#x27;Aptos Display (Liberation Sans)&#x27;, &#x27;Segoe UI&#x27;, system-ui, sans-serif">Compare to Measurements</p></div><img class="piece fill" style="z-index:1;left:9.8085%;top:21.5909%;width:80.3831%;height:74.9602%" src="media/image42.png" alt="A table with numbers and a number AI-generated content may be incorrect."></div><div class="number">25 / 27</div></section>
+<section class="slide" id="slide-26"><div class="stage"><div class="piece text" style="z-index:0;left:6.8750%;top:5.3241%;width:27.9989%;height:24.5244%;justify-content:center;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p style="font-size:8.1481cqh;line-height:1.080;font-family:&#x27;Aptos Display&#x27;, &#x27;Aptos Display (Segoe UI)&#x27;, &#x27;Aptos Display (Arial)&#x27;, &#x27;Aptos Display (Liberation Sans)&#x27;, &#x27;Segoe UI&#x27;, system-ui, sans-serif">Affected Instruments</p></div><div class="piece text" style="z-index:1;left:6.8750%;top:34.3182%;width:23.2102%;height:55.7513%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p class="bullet" style="font-size:5.1852cqh;line-height:0.960;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">AIA</p><p class="bullet" style="font-size:4.4444cqh;line-height:0.960;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">94 Å</p><p class="bullet" style="font-size:4.4444cqh;line-height:0.960;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">1600 Å</p><p class="bullet" style="font-size:4.4444cqh;line-height:0.960;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">1700 Å</p><p class="bullet" style="font-size:5.1852cqh;line-height:0.960;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">IRIS</p><p class="bullet" style="font-size:4.4444cqh;line-height:0.960;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">1330 Å</p><p class="bullet" style="font-size:4.4444cqh;line-height:0.960;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">1400 Å</p><p class="bullet" style="font-size:5.1852cqh;line-height:0.960;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">MUSE</p><p class="bullet" style="font-size:4.4444cqh;line-height:0.960;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">108 Å</p></div><img class="piece fill" style="z-index:2;left:36.8767%;top:3.7984%;width:61.3292%;height:92.4032%" src="media/image44.png" alt="A table of numbers and symbols AI-generated content may be incorrect."></div><div class="number">26 / 27</div></section>
+<section class="slide" id="slide-27"><div class="stage"><div class="piece text" style="z-index:0;left:6.8750%;top:5.3241%;width:86.2500%;height:19.3287%;justify-content:center;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p style="font-size:8.1481cqh;line-height:1.080;font-family:&#x27;Aptos Display&#x27;, &#x27;Aptos Display (Segoe UI)&#x27;, &#x27;Aptos Display (Arial)&#x27;, &#x27;Aptos Display (Liberation Sans)&#x27;, &#x27;Segoe UI&#x27;, system-ui, sans-serif">Conclusions</p></div><div class="piece text" style="z-index:1;left:6.8750%;top:26.6204%;width:86.2500%;height:63.4491%;justify-content:flex-start;padding:0.667cqh 1.333cqh 0.667cqh 1.333cqh"><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Partial-charge collection is mostly responsible for IRIS noise mystery</p><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Charge spreading is less important</p><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Need to use a more complicated expression to compute noise </p><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">The model predicts better SNR in some wavelengths than  designers expected</p><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Results affect AIA, IRIS, WFC3, ESIS, FURST, and MUSE.</p><p class="bullet" style="font-size:5.1852cqh;line-height:1.080;margin-top:1.8519cqh;padding-left:3.3333cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Code provided in the <span style="font-family:&#x27;Aptos Mono&#x27;, &#x27;Segoe UI&#x27;, system-ui, sans-serif">optika.sensors</span><span style="font-family:&#x27;Aptos Mono&#x27;, &#x27;Segoe UI&#x27;, system-ui, sans-serif"> </span>Python module.</p><p class="bullet" style="font-size:4.4444cqh;line-height:1.080;margin-top:0.9259cqh;padding-left:10.0000cqh;--indent:-3.3333cqh;--bullet:&#x27;•&#x27;">Published on PyPI</p></div></div><div class="number">27 / 27</div></section>
+</main>
+<div id="hud"></div>
+<script>
+  // A page full of movies is a great deal to ask of a connection, so each
+  // one starts when it comes into view and stops when it leaves.
+  const watcher = new IntersectionObserver(
+    (entries) => entries.forEach((entry) => {
+      const video = entry.target;
+      if (entry.isIntersecting) {
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    }),
+    { threshold: 0.2 },
+  );
+  document.querySelectorAll("video").forEach((v) => watcher.observe(v));
+
+  // The deck asks for a typeface the reader may not have, and a substitute
+  // sets wider or narrower and wraps somewhere else. Anything which no
+  // longer fits the box it was given is brought back down until it does,
+  // which is what PowerPoint does to text of its own accord.
+  function fit() {
+    document.querySelectorAll(".text").forEach((box) => {
+      if (getComputedStyle(box).whiteSpace === "nowrap") return;
+      // A box on a slide which is not the one being shown has no size to
+      // fit anything to, and would be shrunk to nothing for it.
+      if (!box.clientHeight) return;
+
+      const lines = box.querySelectorAll("p");
+      lines.forEach((p) => {
+        if (p.dataset.size === undefined) p.dataset.size = p.style.fontSize;
+        p.style.fontSize = p.dataset.size;
+      });
+      if (![...lines].every((p) => p.dataset.size.endsWith("cqh"))) return;
+      // Measured from the top of the first line to the foot of the last
+      // rather than by asking the box how far it is overrun, which only
+      // counts what hangs off the bottom: a box anchored to its foot spills
+      // upwards. Measuring the whole stretch also counts the space between
+      // paragraphs.
+      const style = getComputedStyle(box);
+      const room =
+        box.clientHeight -
+        parseFloat(style.paddingTop) -
+        parseFloat(style.paddingBottom);
+      const height = () =>
+        lines[lines.length - 1].getBoundingClientRect().bottom -
+        lines[0].getBoundingClientRect().top;
+      // Shrunk in the units it was written in, which are a share of the
+      // slide's height rather than a count of pixels: the whole layout is
+      // proportional, so what fits at one size fits at every size, and a
+      // slide blown up to fill a screen carries its text up with it.
+      let scale = 1;
+      let guard = 0;
+      while (height() > room + 1 && guard < 60) {
+        scale *= 0.97;
+        lines.forEach((p) => {
+          p.style.fontSize = parseFloat(p.dataset.size) * scale + "cqh";
+        });
+        guard += 1;
+      }
+    });
+  }
+  fit();
+  window.addEventListener("resize", fit);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+
+  // Presenting: the same slides, moved through one at a time instead of
+  // scrolled past. The page is left as it is underneath, so leaving puts
+  // the reader back on the slide they had reached.
+  const slides = [...document.querySelectorAll(".slide")];
+  const hud = document.getElementById("hud");
+  let at = 0;
+  let told = null;
+
+  function presenting() {
+    return document.body.classList.contains("present");
+  }
+
+  function show(index) {
+    at = Math.max(0, Math.min(slides.length - 1, index));
+    slides.forEach((slide, i) => slide.classList.toggle("current", i === at));
+    if (!told) hud.textContent = at + 1 + " / " + slides.length;
+    // A slide arrived at is a slide started from its beginning, which is
+    // what a movie on a slide does when the slide is put up.
+    slides[at].querySelectorAll("video").forEach((video) => {
+      video.currentTime = 0;
+      video.play().catch(() => {});
+    });
+  }
+
+  function nearest() {
+    let best = 0;
+    let gap = Infinity;
+    slides.forEach((slide, i) => {
+      const d = Math.abs(slide.getBoundingClientRect().top);
+      if (d < gap) {
+        gap = d;
+        best = i;
+      }
+    });
+    return best;
+  }
+
+  function present(on) {
+    if (on === presenting()) return;
+    document.body.classList.toggle("present", on);
+    if (on) {
+      // Clicking to move on is worth saying out loud, since nothing on the
+      // screen suggests it.
+      hud.textContent = "click or arrow keys to move  ·  Esc to leave";
+      told = setTimeout(() => {
+        told = null;
+        hud.textContent = at + 1 + " / " + slides.length;
+      }, 4000);
+      show(nearest());
+      const el = document.documentElement;
+      if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
+    } else {
+      if (told) clearTimeout(told), (told = null);
+      if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+      slides[at].scrollIntoView({ block: "center" });
+    }
+  }
+
+  document.getElementById("present").addEventListener("click", () => present(true));
+
+  // The notes can be put away, to look through the slides alone.
+  const notes = document.getElementById("notes");
+  function quiet(on) {
+    document.body.classList.toggle("quiet", on);
+    notes.textContent = on ? "Show notes" : "Hide notes";
+  }
+  if (notes) {
+    notes.addEventListener("click", () => quiet(!document.body.classList.contains("quiet")));
+  }
+
+  // Leaving full screen, by Esc or otherwise, is leaving the presentation.
+  document.addEventListener("fullscreenchange", () => {
+    if (!document.fullscreenElement) present(false);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.metaKey || event.ctrlKey || event.altKey) return;
+    if (!presenting()) {
+      if (event.key === "f") {
+        present(true);
+        event.preventDefault();
+      } else if (event.key === "n" && notes) {
+        quiet(!document.body.classList.contains("quiet"));
+        event.preventDefault();
+      }
+      return;
+    }
+    const forward = ["ArrowRight", "ArrowDown", "PageDown", " ", "Enter"];
+    const back = ["ArrowLeft", "ArrowUp", "PageUp", "Backspace"];
+    if (forward.includes(event.key)) show(at + 1);
+    else if (back.includes(event.key)) show(at - 1);
+    else if (event.key === "Home") show(0);
+    else if (event.key === "End") show(slides.length - 1);
+    else if (event.key === "Escape") present(false);
+    else return;
+    event.preventDefault();
+  });
+
+  // On the slides themselves, so that the button which starts all this is
+  // not also the first click through it.
+  let swiped = false;
+  document.querySelector("main").addEventListener("click", (event) => {
+    if (!presenting()) return;
+    // A movie is left to its own controls.
+    if (event.target.closest("video")) return;
+    if (swiped) {
+      swiped = false;
+      return;
+    }
+    show(at + 1);
+  });
+
+  let start = null;
+  addEventListener("touchstart", (e) => (start = e.touches[0].clientX), { passive: true });
+  addEventListener(
+    "touchend",
+    (event) => {
+      if (start === null || !presenting()) return;
+      const moved = event.changedTouches[0].clientX - start;
+      start = null;
+      if (Math.abs(moved) < 40) return;
+      swiped = true;
+      show(moved < 0 ? at + 1 : at - 1);
+    },
+    { passive: true },
+  );
+</script>
+</body>
+</html>
